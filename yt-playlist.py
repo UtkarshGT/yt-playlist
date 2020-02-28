@@ -16,7 +16,7 @@ print("There are Total", len(containers), "videos in Playlist\n")
 unavailable = []
 
 for container in containers:
-    title = container.text.replace("by sentdex","").strip()
+    title = container.text.replace("Channel name goes here","").strip() # Put Channel name
 
     file_name = Path(title + ".mp4")
     if file_name.is_file():
