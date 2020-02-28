@@ -1,7 +1,8 @@
-from bs4 import BeautifulSoup as soup
 import requests
+from bs4 import BeautifulSoup as soup
+from pathlib import Path
 
-my_url = "" # Enter Youtube Playlst URL inside Quotes
+my_url = "" # Put Youtube Playlist URL inside Quotes
 
 # headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0"}
 
@@ -10,17 +11,19 @@ page_soup = soup(page_html.text, "lxml")
 
 containers = page_soup.findAll("td",{"class":"pl-video-title"})
 
-print("There are Total", len(containers), "videos in Playlist")
+print("There are Total", len(containers), "videos in Playlist\n")
 
 unavailable = []
 
 for container in containers:
     title = container.text.replace("by sentdex","").strip()
 
-    try:
-        open((title + ".mp4"), "r")
-        
-    except:
+    file_name = Path(title + ".mp4")
+    if file_name.is_file():
+        continue
+    else:
         unavailable.append(title)
 
-print(unavailable)
+print("Unavailable files are :\n")
+for temp in unavailable:
+    print(temp)
